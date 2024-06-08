@@ -2,8 +2,8 @@ import os
 from django.core.management import BaseCommand
 from django.db import connection
 
-from ...models import Product, Category
-from ...utils import read_JSON_data
+from catalog.models import Product, Category
+from catalog.utils import read_JSON_data
 
 category_file_path = os.path.join(
     "catalog", "management", "commands", "data", "category.json"
