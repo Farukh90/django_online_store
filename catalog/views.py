@@ -2,13 +2,16 @@ from django.shortcuts import render
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
 from catalog.utils import create_contact_dict
+from catalog.models import Category, Product
 
 contacts_base_file = r'contacts.json'
 
 
 # Create your views here.
-def home_page(request):
-    return render(request, 'catalog/index.html')
+def products_list(request):
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, 'catalog/base.html', context)
 
 
 def contacts(request):
