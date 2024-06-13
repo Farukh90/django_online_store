@@ -1,0 +1,67 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "помидоры",
+      "description": "очень вкусно, польза сомнительна.",
+      "photo": "catalog/photo/pxfuel_2.jpg",
+      "category": 1,
+      "price": 200,
+      "created_at": "2024-06-07T20:41:43.338Z",
+      "updated_at": "2024-06-07T20:41:43.338Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Огурцы",
+      "description": "норм",
+      "photo": "catalog/photo/2_2.png",
+      "category": 1,
+      "price": 150,
+      "created_at": "2024-06-07T20:42:12.096Z",
+      "updated_at": "2024-06-07T20:42:12.096Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "персики",
+      "description": "очень вкусно",
+      "photo": "",
+      "category": 2,
+      "price": 400,
+      "created_at": "2024-06-07T20:42:31.390Z",
+      "updated_at": "2024-06-07T20:42:31.390Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "манго",
+      "description": "экзотика",
+      "photo": "",
+      "category": 2,
+      "price": 200,
+      "created_at": "2024-06-07T20:42:51.162Z",
+      "updated_at": "2024-06-07T20:42:51.162Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "ананас",
+      "description": "экзотика",
+      "photo": "",
+      "category": 2,
+      "price": 300,
+      "created_at": "2024-06-07T20:43:05.646Z",
+      "updated_at": "2024-06-07T20:43:05.646Z"
+    }
+  }
+]

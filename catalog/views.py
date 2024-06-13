@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .utils import read_JSON_data
-from .utils import write_JSON_data
-from .utils import create_contact_dict
+from catalog.utils import read_JSON_data
+from catalog.utils import write_JSON_data
+from catalog.utils import create_contact_dict
 
 contacts_base_file = r'contacts.json'
 
