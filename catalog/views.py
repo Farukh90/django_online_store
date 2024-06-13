@@ -11,7 +11,14 @@ contacts_base_file = r'contacts.json'
 def products_list(request):
     products = Product.objects.all()
     context = {"products": products}
-    return render(request, 'catalog/base.html', context)
+    return render(request, 'catalog/products_list.html', context)
+
+
+def product_details(request, pk):
+    product = Product.objects.get(pk=pk)
+    context = {"product": product}
+    return render(request, 'catalog/product_details.html',context)
+
 
 
 def contacts(request):
