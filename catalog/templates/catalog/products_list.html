@@ -1,0 +1,38 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-3">
+                <div class="card shadow-sm" style="width: 250px;">
+                    <img src="{{ product.photo | media_filter }}" style="width: 100%; height: auto;">
+                    <div class="card-body">
+                        <p class="card-text"><strong>
+                            {% if product.name|length > 30 %}
+                                {{ product.name|slice:":20" }}...
+                            {% else %}
+                                {{ product.name }}
+                            {% endif %}
+                        </strong></p>
+                        <p class="card-text">
+                            {% if product.description|length > 20 %}
+                                {{ product.description|slice:":20" }}...
+                            {% else %}
+                                {{ product.description }}
+                            {% endif %}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'catalog:product_details' product.pk %}" role="button">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
