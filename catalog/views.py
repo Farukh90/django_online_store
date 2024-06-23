@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
+
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
 from catalog.utils import create_contact_dict
@@ -10,14 +12,19 @@ contacts_base_file = r'contacts.json'
 # Create your views here.
 def products_list(request):
     products = Product.objects.all()
-    context = {"products": products}
-    return render(request, 'catalog/products_list.html', context)
+    context = {"product_list": products}
+    return render(request, 'catalog/product_list.html', context)
+
+
+class ProductListView(ListView):
+    model = Product
+    extra_context = {'list_name': 'Продукты'}
 
 
 def product_details(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {"product": product}
-    return render(request, 'catalog/product_details.html',context)
+    return render(request, 'catalog/product_detail.html',context)
 
 
 
