@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView
+from django.views import View
+from django.views.generic import ListView, DetailView
 
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
@@ -9,28 +10,24 @@ from catalog.models import Category, Product
 contacts_base_file = r'contacts.json'
 
 
-# Create your views here.
-def products_list(request):
-    products = Product.objects.all()
-    context = {"product_list": products}
-    return render(request, 'catalog/product_list.html', context)
-
-
 class ProductListView(ListView):
     model = Product
     extra_context = {'list_name': 'Продукты'}
 
 
-def product_details(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, 'catalog/product_detail.html',context)
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
 
+class ContactView(View):
+    template_name = 'catalog/contacts.html'
 
-def contacts(request):
-    '''обрабатывает POST запрос и сохраняет контактные данные в файл JSON'''
-    if request.method == 'POST':
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
         name = request.POST.get('name')
         email = request.POST.get('phone')
         message = request.POST.get('message')
@@ -44,5 +41,4 @@ def contacts(request):
 
         write_JSON_data(contacts_base_file, contacts_base)
 
-
-    return render(request, 'catalog/contacts.html')
+        return render(request, self.template_name)

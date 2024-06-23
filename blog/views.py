@@ -1,5 +1,3 @@
-import pdb
-
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -31,10 +29,10 @@ class BlogDetailView(DetailView):
     model = BlogPost
 
     def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        self.object.views_count += 1
-        self.object.save()
-        return self.object
+        obj = super().get_object(queryset)
+        obj.views_count += 1
+        obj.save()
+        return obj
 
 
 class BlogUpdateView(UpdateView):
