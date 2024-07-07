@@ -12,9 +12,21 @@ from catalog.models import Category, Product
 contacts_base_file = r'contacts.json'
 
 
+# class ProductListView(ListView):
+#     model = Product
+#     extra_context = {'list_name': 'Продукты'}
+
+
 class ProductListView(ListView):
     model = Product
-    extra_context = {'list_name': 'Продукты'}
+    template_name = 'catalog/product_list.html'
+    context_object_name = 'product_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for product in context['product_list']:
+            product.active_version = product.versions.filter(is_current=True).first()
+        return context
 
 
 class ProductCreateView(CreateView):
@@ -24,17 +36,26 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('catalog:products_list')
 
 
-class ProductUpdateView(CreateView):
+class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:products_list')
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_detail', kwargs={'pk': self.object.pk})
 
 
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_counter += 1
+        self.object.save()
+        return self.object
 
 
 class ContactView(View):
