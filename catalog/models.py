@@ -59,3 +59,15 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.price} {self.category}'
+
+
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='versions', verbose_name='product')
+    version_number = models.CharField(max_length=50)
+    version_name = models.CharField(max_length=150)
+    is_current = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.version_name} ({self.version_number})"
