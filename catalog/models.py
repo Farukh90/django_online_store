@@ -74,9 +74,16 @@ class Version(models.Model):
         related_name="versions",
         verbose_name="product",
     )
-    version_number = models.CharField(max_length=50)
-    version_name = models.CharField(max_length=150)
-    is_current = models.BooleanField(default=False)
+    version_number = models.CharField(max_length=50, verbose_name="Номер версии")
+    version_name = models.CharField(max_length=150, verbose_name="Название версии")
+    is_current = models.BooleanField(
+        default=False, verbose_name="Признак текущей версия"
+    )
+
+    class Meta:
+        verbose_name = "Версия продукта"
+        verbose_name_plural = "Версии продукта"
+        ordering = ["product"]
 
     def __str__(self):
         return f"{self.product.name} - {self.version_name} ({self.version_number})"

@@ -1,0 +1,11 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+  <h1>Подтверждение удаления</h1>
+  <p>Вы действительно хотите удалить "{{ object }}"?</p>
+  
+  <form method="post">{% csrf_token %}
+    <button type="submit">Подтвердить</button>
+    <a href="{% url 'catalog:products_list' %}">Отменить</a>
+  </form>
+{% endblock %}

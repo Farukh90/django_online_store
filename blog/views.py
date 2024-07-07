@@ -1,13 +1,22 @@
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    CreateView,
+    ListView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 from blog.models import BlogPost
 
 
 class BlogCreateView(CreateView):
     model = BlogPost
-    fields = ('title', 'content',)
-    success_url = reverse_lazy('blog:blog_list')
+    fields = (
+        "title",
+        "content",
+    )
+    success_url = reverse_lazy("blog:blog_list")
 
     def form_valid(self, form):
         blog = form.save()
@@ -18,7 +27,7 @@ class BlogCreateView(CreateView):
 
 class BlogListView(ListView):
     model = BlogPost
-    extra_context = {'list_name': 'Блог'}
+    extra_context = {"list_name": "Блог"}
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -37,13 +46,16 @@ class BlogDetailView(DetailView):
 
 class BlogUpdateView(UpdateView):
     model = BlogPost
-    fields = ('title', 'content',)
+    fields = (
+        "title",
+        "content",
+    )
 
     def get_success_url(self):
-        return reverse_lazy('blog:blog_detail', kwargs={'slug': self.object.slug})
+        return reverse_lazy("blog:blog_detail", kwargs={"slug": self.object.slug})
 
 
 class BlogDeleteView(DeleteView):
     model = BlogPost
 
-    success_url = reverse_lazy('blog:blog_list')
+    success_url = reverse_lazy("blog:blog_list")
