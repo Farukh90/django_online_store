@@ -10,6 +10,7 @@ from django.views.generic import (
     DeleteView,
 )
 
+
 from catalog.forms import ProductForm, VersionForm
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
