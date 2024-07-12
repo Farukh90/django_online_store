@@ -10,14 +10,13 @@
                 <ul class="list-unstyled">
                     <li><a href="{% url 'catalog:products_list' %}" class="text-dark">Главная</a></li>
                     {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'users:logout' %}">
+                        <form id="logout-form" method="post" action="{% url 'users:logout' %}" style="display: none;">
                             {% csrf_token %}
-                            <button class="text-dark" type="submit">Выйти</button>
                         </form>
+                        <li><a href="{% url 'users:logout' %}" class="text-dark">Выйти</a></li>
                     {% else %}
-                        <a class="text-dark" href="{% url 'users:login' %}">Войти</a>
+                        <li><a href="{% url 'users:login' %}" class="text-dark">Вход</a></li>
                     {% endif %}
-
                     <li><a href="#" class="text-dark">Регистрация</a></li>
                     <li><a href="{% url 'catalog:contacts' %}" class="text-dark">Контакты</a></li>
                     <li><a href="{% url 'blog:blog_list' %}" class="text-dark">Блог</a></li>
