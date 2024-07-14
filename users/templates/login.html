@@ -10,6 +10,7 @@
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">Войти</button>
                         <a class="btn btn-primary" href="{% url 'catalog:products_list' %}" role="button">Назад</a>
+                        <a class="btn btn-link" href="{% url 'users:password_reset' %}">Восстановить пароль</a>
                     </div>
                     <div class="card-footer"></div>
                 </div>
@@ -17,3 +18,4 @@
         </form>
     </div>
 {% endblock %}
+
