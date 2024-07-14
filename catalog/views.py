@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.forms import inlineformset_factory
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -10,7 +12,6 @@ from django.views.generic import (
     DeleteView,
 )
 
-
 from catalog.forms import ProductForm, VersionForm
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
@@ -18,6 +19,21 @@ from catalog.utils import create_contact_dict
 from catalog.models import Category, Product, Version
 
 contacts_base_file = r"contacts.json"
+
+
+class OwnerRequiredMixin(AccessMixin):
+    """
+    миксин для проверки владельца продукта.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.owner != self.request.user:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("У вас нет доступа к редактированию, удалению продуктов.")
 
 
 class ProductListView(ListView):
@@ -32,14 +48,21 @@ class ProductListView(ListView):
         return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_form.html"
     success_url = reverse_lazy("catalog:products_list")
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_form.html"
@@ -86,7 +109,7 @@ class ProductDetailView(DetailView):
         return self.object
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:products_list")
@@ -96,7 +119,6 @@ class ProductDeleteView(DeleteView):
         success_url = self.get_success_url()
         self.object.delete()
         return redirect(success_url)
-
 
 
 class ContactView(View):

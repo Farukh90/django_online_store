@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-# Create your models here.
+
+User = get_user_model()
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -57,6 +59,8 @@ class Product(models.Model):
         help_text="Укажите количество просмотров",
         default=0,
     )
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products", **NULLABLE)
 
     class Meta:
         verbose_name = "Продукт"
