@@ -1,56 +1,61 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
-<div class="album py-5 bg-body-tertiary">
-   <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">{{ list_name }}</h1>
-                <p class="lead text-body-secondary">онлайн магазин</p>
-                <p>
-                    <a class="btn btn-primary" href="{% url 'catalog:product_create' %}"
-                                   role="button">Создать продукт</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                </p>
-            </div>
-        </div>
-    </section>
-    <div class="container">
-        <div class="row">
-            {% for product in product_list %}
-            <div class="col-3">
-                <div class="card shadow-sm" style="width: 250px;">
-                    <img src="{{ product.photo | media_filter }}" style="width: 100%; height: auto;">
-                    <div class="card-body">
-                        <p class="card-text"><strong>
-                            {% if product.name|length > 30 %}
-                                {{ product.name|slice:":20" }}...
-                            {% else %}
-                                {{ product.name }}
-                            {% endif %}
-                        </strong></p>
-                        <p class="card-text">
-                            {% if product.description|length > 20 %}
-                                {{ product.description|slice:":20" }}...
-                            {% else %}
-                                {{ product.description }}
-                            {% endif %}
-                        </p>
-                        {% if product.active_version %}
-                        <p class="card-text">
-                            <strong>Текущая версия:</strong> {{ product.active_version.version_name }} ({{ product.active_version.version_number }})
-                        </p>
+    <div class="album py-5 bg-body-tertiary">
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">{{ list_name }}</h1>
+                    <p class="lead text-body-secondary">онлайн магазин</p>
+
+                    <p>
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-primary" href="{% url 'catalog:product_create' %}"
+                               role="button">Создать продукт</a>
                         {% endif %}
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-primary" href="{% url 'catalog:product_details' product.pk %}" role="button">Подробнее</a>
-                            </div>
-                        </div>
-                    </div>
+                        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    </p>
                 </div>
             </div>
-            {% endfor %}
+        </section>
+        <div class="container">
+            <div class="row">
+                {% for product in product_list %}
+                        <div class="col-3">
+                            <div class="card shadow-sm" style="width: 250px;">
+                                <img src="{{ product.photo | media_filter }}" style="width: 100%; height: auto;">
+                                <div class="card-body">
+                                    <p class="card-text"><strong>
+                                        {% if product.name|length > 30 %}
+                                            {{ product.name|slice:":20" }}...
+                                        {% else %}
+                                            {{ product.name }}
+                                        {% endif %}
+                                    </strong></p>
+                                    <p class="card-text">
+                                        {% if product.description|length > 20 %}
+                                            {{ product.description|slice:":20" }}...
+                                        {% else %}
+                                            {{ product.description }}
+                                        {% endif %}
+                                    </p>
+                                    {% if product.active_version %}
+                                        <p class="card-text">
+                                            <strong>Текущая версия:</strong> {{ product.active_version.version_name }}
+                                            ({{ product.active_version.version_number }})
+                                        </p>
+                                    {% endif %}
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary"
+                                               href="{% url 'catalog:product_details' product.pk %}" role="button">Подробнее</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

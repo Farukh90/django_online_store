@@ -8,11 +8,18 @@
             <div class="col-sm-4 offset-md-1 py-4">
                 <h4>Навигация</h4>
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'catalog:products_list'%}" class="text-dark">Главная</a></li>
-                    <li><a href="#" class="text-dark">Вход</a></li>
-                    <li><a href="#" class="text-dark">Регистрация</a></li>
-                    <li><a href="{% url 'catalog:contacts'%}" class="text-dark">Контакты</a></li>
-                    <li><a href="{% url 'blog:blog_list'%}" class="text-dark">Блог</a></li>
+                    <li><a href="{% url 'catalog:products_list' %}" class="text-dark">Главная</a></li>
+                    {% if user.is_authenticated %}
+                        <form id="logout-form" method="post" action="{% url 'users:logout' %}" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                        <li><a href="{% url 'users:logout' %}" class="text-dark">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-dark">Вход</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'users:register' %}" class="text-dark">Регистрация</a></li>
+                    <li><a href="{% url 'catalog:contacts' %}" class="text-dark">Контакты</a></li>
+                    <li><a href="{% url 'blog:blog_list' %}" class="text-dark">Блог</a></li>
                 </ul>
             </div>
         </div>
