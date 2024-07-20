@@ -61,11 +61,17 @@ class Product(models.Model):
     )
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products", **NULLABLE)
+    is_published = models.BooleanField(default=False, verbose_name='Опубликован')
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_unpublish_product", 'Can unpublish product'),
+            ("can_change_product_description", "Can change product description"),
+            ("can_change_product_category", "Can change product category"),
+        ]
 
     def __str__(self):
         return f"{self.name} {self.price} {self.category}"
@@ -91,3 +97,5 @@ class Version(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.version_name} ({self.version_number})"
+
+

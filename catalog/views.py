@@ -1,6 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+import logging
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
-from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -12,7 +14,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
 from catalog.utils import create_contact_dict
@@ -20,21 +22,7 @@ from catalog.models import Category, Product, Version
 
 contacts_base_file = r"contacts.json"
 
-
-class OwnerRequiredMixin(AccessMixin):
-    """
-    миксин для проверки владельца продукта.
-    """
-
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object.owner != self.request.user:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
-
-    def handle_no_permission(self):
-        return HttpResponseForbidden("У вас нет доступа к редактированию, удалению продуктов.")
-
+logger = logging.getLogger(__name__)
 
 class ProductListView(ListView):
     model = Product
@@ -62,7 +50,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_form.html"
@@ -96,6 +84,14 @@ class ProductUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
+    def get_form_class(self):
+        user = self.request.user
+
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("catalog.can_unpublish_product") and user.has_perm("catalog.can_change_product_description") and user.has_perm("catalog.can_change_product_category"):
+            return ProductModeratorForm
+        raise PermissionDenied
 
 class ProductDetailView(DetailView):
     model = Product
@@ -109,7 +105,7 @@ class ProductDetailView(DetailView):
         return self.object
 
 
-class ProductDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:products_list")
@@ -119,6 +115,15 @@ class ProductDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
         success_url = self.get_success_url()
         self.object.delete()
         return redirect(success_url)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("product.can_unpublish_product") and user.has_perm("product.can_change_product_description") and user.has_perm("product.can_change_product_category"):
+            return ProductModeratorForm
+        logger.warning(f"Permission denied for user {user.username} on product {Product.pk}")
+        raise PermissionDenied
 
 
 class ContactView(View):
