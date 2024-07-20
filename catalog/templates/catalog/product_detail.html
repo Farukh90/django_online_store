@@ -15,10 +15,12 @@
                                     <div class="me-2">
                                         <a class="btn btn-primary" href="{% url 'catalog:products_list' %}"
                                            role="button">Назад</a>
-                                        {% if user.is_authenticated  and user == product.owner%}
+                                        {% if perms.catalog.can_unpublish_product and perms.catalog.can_change_product_description and perms.catalog.can_change_product_category or user == product.owner %}
                                             <a class="btn btn-warning ms-10"
                                                href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
-                                            <a class="btn btn-danger ms-10" 
+                                        {% endif %}
+                                        {% if user == product.owner %}
+                                            <a class="btn btn-danger ms-10"
                                                href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                                         {% endif %}
                                     </div>
