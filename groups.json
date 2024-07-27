@@ -183,7 +183,7 @@
     "model": "auth.permission",
     "pk": 21,
     "fields": {
-      "name": "Can add Категория",
+      "name": "Can add РљР°С‚РµРіРѕСЂРёСЏ",
       "content_type": 7,
       "codename": "add_category"
     }
@@ -192,7 +192,7 @@
     "model": "auth.permission",
     "pk": 22,
     "fields": {
-      "name": "Can change Категория",
+      "name": "Can change РљР°С‚РµРіРѕСЂРёСЏ",
       "content_type": 7,
       "codename": "change_category"
     }
@@ -201,7 +201,7 @@
     "model": "auth.permission",
     "pk": 23,
     "fields": {
-      "name": "Can delete Категория",
+      "name": "Can delete РљР°С‚РµРіРѕСЂРёСЏ",
       "content_type": 7,
       "codename": "delete_category"
     }
@@ -210,7 +210,7 @@
     "model": "auth.permission",
     "pk": 24,
     "fields": {
-      "name": "Can view Категория",
+      "name": "Can view РљР°С‚РµРіРѕСЂРёСЏ",
       "content_type": 7,
       "codename": "view_category"
     }
@@ -219,7 +219,7 @@
     "model": "auth.permission",
     "pk": 25,
     "fields": {
-      "name": "Can add Продукт",
+      "name": "Can add РџСЂРѕРґСѓРєС‚",
       "content_type": 8,
       "codename": "add_product"
     }
@@ -228,7 +228,7 @@
     "model": "auth.permission",
     "pk": 26,
     "fields": {
-      "name": "Can change Продукт",
+      "name": "Can change РџСЂРѕРґСѓРєС‚",
       "content_type": 8,
       "codename": "change_product"
     }
@@ -237,7 +237,7 @@
     "model": "auth.permission",
     "pk": 27,
     "fields": {
-      "name": "Can delete Продукт",
+      "name": "Can delete РџСЂРѕРґСѓРєС‚",
       "content_type": 8,
       "codename": "delete_product"
     }
@@ -246,7 +246,7 @@
     "model": "auth.permission",
     "pk": 28,
     "fields": {
-      "name": "Can view Продукт",
+      "name": "Can view РџСЂРѕРґСѓРєС‚",
       "content_type": 8,
       "codename": "view_product"
     }
@@ -255,7 +255,7 @@
     "model": "auth.permission",
     "pk": 29,
     "fields": {
-      "name": "Can add Версия продукта",
+      "name": "Can add Р’РµСЂСЃРёСЏ РїСЂРѕРґСѓРєС‚Р°",
       "content_type": 11,
       "codename": "add_version"
     }
@@ -264,7 +264,7 @@
     "model": "auth.permission",
     "pk": 30,
     "fields": {
-      "name": "Can change Версия продукта",
+      "name": "Can change Р’РµСЂСЃРёСЏ РїСЂРѕРґСѓРєС‚Р°",
       "content_type": 11,
       "codename": "change_version"
     }
@@ -273,7 +273,7 @@
     "model": "auth.permission",
     "pk": 31,
     "fields": {
-      "name": "Can delete Версия продукта",
+      "name": "Can delete Р’РµСЂСЃРёСЏ РїСЂРѕРґСѓРєС‚Р°",
       "content_type": 11,
       "codename": "delete_version"
     }
@@ -282,7 +282,7 @@
     "model": "auth.permission",
     "pk": 32,
     "fields": {
-      "name": "Can view Версия продукта",
+      "name": "Can view Р’РµСЂСЃРёСЏ РїСЂРѕРґСѓРєС‚Р°",
       "content_type": 11,
       "codename": "view_version"
     }
@@ -291,7 +291,7 @@
     "model": "auth.permission",
     "pk": 33,
     "fields": {
-      "name": "Can add Пост в блоге",
+      "name": "Can add РџРѕСЃС‚ РІ Р±Р»РѕРіРµ",
       "content_type": 10,
       "codename": "add_blogpost"
     }
@@ -300,7 +300,7 @@
     "model": "auth.permission",
     "pk": 34,
     "fields": {
-      "name": "Can change Пост в блоге",
+      "name": "Can change РџРѕСЃС‚ РІ Р±Р»РѕРіРµ",
       "content_type": 10,
       "codename": "change_blogpost"
     }
@@ -309,7 +309,7 @@
     "model": "auth.permission",
     "pk": 35,
     "fields": {
-      "name": "Can delete Пост в блоге",
+      "name": "Can delete РџРѕСЃС‚ РІ Р±Р»РѕРіРµ",
       "content_type": 10,
       "codename": "delete_blogpost"
     }
@@ -318,7 +318,7 @@
     "model": "auth.permission",
     "pk": 36,
     "fields": {
-      "name": "Can view Пост в блоге",
+      "name": "Can view РџРѕСЃС‚ РІ Р±Р»РѕРіРµ",
       "content_type": 10,
       "codename": "view_blogpost"
     }
@@ -327,7 +327,7 @@
     "model": "auth.permission",
     "pk": 37,
     "fields": {
-      "name": "Can add Пользователь",
+      "name": "Can add РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ",
       "content_type": 12,
       "codename": "add_user"
     }
@@ -336,7 +336,7 @@
     "model": "auth.permission",
     "pk": 38,
     "fields": {
-      "name": "Can change Пользователь",
+      "name": "Can change РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ",
       "content_type": 12,
       "codename": "change_user"
     }
@@ -345,7 +345,7 @@
     "model": "auth.permission",
     "pk": 39,
     "fields": {
-      "name": "Can delete Пользователь",
+      "name": "Can delete РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ",
       "content_type": 12,
       "codename": "delete_user"
     }
@@ -354,7 +354,7 @@
     "model": "auth.permission",
     "pk": 40,
     "fields": {
-      "name": "Can view Пользователь",
+      "name": "Can view РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ",
       "content_type": 12,
       "codename": "view_user"
     }

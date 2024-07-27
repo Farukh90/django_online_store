@@ -1,0 +1,54 @@
+[
+  {
+    "model": "blog.blogpost",
+    "pk": 1,
+    "fields": {
+      "title": "123",
+      "slug": "123",
+      "content": "123",
+      "preview_image": "",
+      "created_at": "2024-06-23T18:54:24.596Z",
+      "is_published": true,
+      "views_count": 0
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 13,
+    "fields": {
+      "title": "12334rt34",
+      "slug": "12334rt34",
+      "content": "1",
+      "preview_image": "",
+      "created_at": "2024-06-23T21:33:10.553Z",
+      "is_published": true,
+      "views_count": 49
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 16,
+    "fields": {
+      "title": "12312",
+      "slug": "12312",
+      "content": "wretgw",
+      "preview_image": "",
+      "created_at": "2024-06-23T23:07:44.020Z",
+      "is_published": true,
+      "views_count": 6
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 17,
+    "fields": {
+      "title": "12312341234",
+      "slug": "12312341234",
+      "content": "укпфцукп",
+      "preview_image": "",
+      "created_at": "2024-06-23T23:17:13.031Z",
+      "is_published": true,
+      "views_count": 32
+    }
+  }
+]
