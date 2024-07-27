@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
@@ -15,6 +16,7 @@ from django.views.generic import (
 )
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
+from catalog.services import get_cached_products
 from catalog.utils import read_JSON_data
 from catalog.utils import write_JSON_data
 from catalog.utils import create_contact_dict
@@ -28,6 +30,9 @@ class ProductListView(ListView):
     model = Product
     template_name = "catalog/product_list.html"
     context_object_name = "product_list"
+
+    def get_queryset(self):
+        return get_cached_products()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -82,6 +87,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
 
+        cache.delete('products_list')
         return super().form_valid(form)
 
     def get_form_class(self):
@@ -114,6 +120,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()
+        cache.delete('products_list')
         return redirect(success_url)
 
     def get_form_class(self):
