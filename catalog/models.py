@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-# Create your models here.
+
+User = get_user_model()
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -36,7 +38,7 @@ class Product(models.Model):
         upload_to="catalog/photo",
         verbose_name="Изображение",
         help_text="Загрузите изображение продукта",
-        **NULLABLE
+        **NULLABLE,
     )
     category = models.ForeignKey(
         Category,
@@ -44,7 +46,7 @@ class Product(models.Model):
         verbose_name="Категория продукта",
         help_text="Введите категорию продукта",
         related_name="products",
-        **NULLABLE
+        **NULLABLE,
     )
     price = models.IntegerField(
         verbose_name="Цена", help_text="Введите стоимость продукта", **NULLABLE
@@ -52,10 +54,48 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
 
+    views_counter = models.PositiveIntegerField(
+        verbose_name="Счетчик просмотров",
+        help_text="Укажите количество просмотров",
+        default=0,
+    )
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products", **NULLABLE)
+    is_published = models.BooleanField(default=False, verbose_name='Опубликован')
+
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_unpublish_product", 'Can unpublish product'),
+            ("can_change_product_description", "Can change product description"),
+            ("can_change_product_category", "Can change product category"),
+        ]
 
     def __str__(self):
-        return f'{self.name} {self.price} {self.category}'
+        return f"{self.name} {self.price} {self.category}"
+
+
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="versions",
+        verbose_name="product",
+    )
+    version_number = models.CharField(max_length=50, verbose_name="Номер версии")
+    version_name = models.CharField(max_length=150, verbose_name="Название версии")
+    is_current = models.BooleanField(
+        default=False, verbose_name="Признак текущей версия"
+    )
+
+    class Meta:
+        verbose_name = "Версия продукта"
+        verbose_name_plural = "Версии продукта"
+        ordering = ["product"]
+
+    def __str__(self):
+        return f"{self.product.name} - {self.version_name} ({self.version_number})"
+
+

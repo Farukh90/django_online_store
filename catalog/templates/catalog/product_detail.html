@@ -1,0 +1,34 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <img src="{{ product.photo | media_filter }}">
+                        <div class="card-body">
+                            <p class="card-text"><strong>{{ product.name }}</strong></p>
+                            <p class="card-text">{{ product.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <div class="me-2">
+                                        <a class="btn btn-primary" href="{% url 'catalog:products_list' %}"
+                                           role="button">Назад</a>
+                                        {% if perms.catalog.can_unpublish_product and perms.catalog.can_change_product_description and perms.catalog.can_change_product_category or user == product.owner %}
+                                            <a class="btn btn-warning ms-10"
+                                               href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
+                                        {% endif %}
+                                        {% if user == product.owner %}
+                                            <a class="btn btn-danger ms-10"
+                                               href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
